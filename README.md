@@ -19,9 +19,9 @@ Intinya, aplikasi ini dibuat supaya pemilik toko bisa ngurusin data-data penting
 Teknologi yang saya pakai di sini dipilih biar development-nya efisien dan hasilnya maksimal:
 
 - **Next.js 15 (App Router)** & **TypeScript**: Kombinasi ini bikin performa kenceng dan kode lebih aman dari bug.
-- **Tailwind CSS**: Urusan styling jadi lebih cepet dan pastinya responsif di semua ukuran layar.
-- **Zustand**: Buat state management yang ringan dan nggak ribet (lebih simpel dari Redux).
-- **React Hook Form**: Validasi input data jadi jauh lebih gampang dan rapi.
+- **Tailwind CSS**: styling jadi lebih cepet dan pastinya responsif.
+- **Zustand**: Buat state management yang ringan dan nggak ribet.
+- **React Hook Form**: Validasi input data lebih gampang dan rapi.
 
 ## 💻 Cara Install
 
