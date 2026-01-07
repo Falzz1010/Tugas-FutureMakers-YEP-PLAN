@@ -9,14 +9,26 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "SportOn",
-  description: "SportOn Dashboard Application",
+  title: {
+    default: "SportOn",
+    template: "%s | SportOn",
+  },
+  description: "SportOn – Modern Sports Commerce Platform",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 import { ServiceWorkerUnregister } from "@/components/ServiceWorkerUnregister";
-import { CartProvider } from "@/context/CartContext";
-import { BankProvider } from "@/context/BankContext";
+import { Providers } from "@/components/Providers";
 
+/**
+ * Root Layout - Minimal global providers
+ * 
+ * Route-specific providers:
+ * - Shop pages (/, /product, /checkout, etc.) → ShopProviders in (shop)/layout.tsx
+ * - Admin pages (/dashboard/*) → AdminProviders in (dashboard)/layout.tsx
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,13 +38,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${poppins.variable} antialiased font-poppins`}
+        suppressHydrationWarning
       >
         <ServiceWorkerUnregister />
-        <BankProvider>
-          <CartProvider>
-            {children}
-          </CartProvider>
-        </BankProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
