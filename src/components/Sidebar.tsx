@@ -51,17 +51,9 @@ export function Sidebar({ isOpen, onClose }: { isOpen?: boolean, onClose?: () =>
                 )}
             >
                 <div className="p-8 pb-12 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                            <svg width="18" height="18" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M256 32L128 96V224C128 320 256 416 256 416C256 416 384 320 384 224V96L256 32Z" fill="white" />
-                                <path d="M256 64L160 112V208C160 272 256 352 256 352C256 352 352 272 352 208V112L256 64Z" fill="#FF4D00" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-black text-gray-900 tracking-tight leading-none">
-                                SPORT<span className="text-primary">ON</span>
-                            </h1>
+                    <div className="flex items-center justify-start">
+                        <div className="h-10 w-auto">
+                            <img src="/Frame 5.png" alt="SportOn Logo" className="h-full w-auto object-contain" />
                         </div>
                     </div>
                     <button onClick={onClose} className="lg:hidden text-gray-400 hover:text-gray-900">
