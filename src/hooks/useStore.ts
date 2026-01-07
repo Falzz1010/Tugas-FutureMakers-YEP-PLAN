@@ -23,6 +23,7 @@ interface StoreActions {
     addBank: (bank: Omit<BankAccount, "id">) => void;
     deleteBank: (id: string) => void;
 
+    addTransaction: (transaction: Omit<Transaction, "id">) => void;
     updateTransactionStatus: (id: string, status: TransactionStatus) => void;
     setLoading: (loading: boolean) => void;
 }
@@ -63,6 +64,9 @@ const useZustandStore = create<StoreState & StoreActions>()(
                 bankAccounts: state.bankAccounts.filter((b) => b.id !== id)
             })),
 
+            addTransaction: (transaction) => set((state) => ({
+                transactions: [...state.transactions, { ...transaction, id: crypto.randomUUID() }]
+            })),
             updateTransactionStatus: (id, status) => set((state) => ({
                 transactions: state.transactions.map((t) => (t.id === id ? { ...t, status } : t))
             })),

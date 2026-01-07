@@ -15,10 +15,10 @@ export default function DashboardLayout({
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-body-bg font-sans selection:bg-primary/10 selection:text-primary flex">
+        <div className="h-screen bg-body-bg font-sans selection:bg-primary/10 selection:text-primary flex overflow-hidden">
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-            <main className="flex-1 flex flex-col min-w-0 min-h-screen">
+            <main className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto bg-gray-50/30">
                 <header className="sticky top-0 z-30 bg-white/70 backdrop-blur-xl border-b border-gray-100 h-20 flex items-center justify-between px-6 md:px-12">
                     <div className="flex items-center gap-4">
                         <Button
