@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Search, ShoppingBag, Plus, Play } from "lucide-react";
+import { Plus, Play } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { CartPopup } from "@/components/CartPopup";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 // Product data - matched to actual product images
 const products = [
@@ -23,7 +25,7 @@ const formatPrice = (price: number) => {
 };
 
 export default function LandingPage() {
-  const { addToCart, openCart, getTotalItems } = useCart();
+  const { addToCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent, product: typeof products[0]) => {
     e.preventDefault();
@@ -36,54 +38,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       <CartPopup />
-      
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-dark rounded-lg flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
-                  <path d="M256 32L128 96V224C128 320 256 416 256 416C256 416 384 320 384 224V96L256 32Z" fill="white" />
-                  <path d="M256 64L160 112V208C160 272 256 352 256 352C256 352 352 272 352 208V112L256 64Z" fill="#FF5F3F" />
-                </svg>
-              </div>
-              <span className="text-base font-bold text-dark tracking-tight">SPORT<span style={{ color: '#FF5F3F' }}>ON</span></span>
-            </Link>
-
-            {/* Nav Links - Center */}
-            <div className="hidden md:flex items-center gap-12">
-              <Link href="/" className="text-sm font-medium text-dark border-b-2 border-dark pb-0.5">
-                Home
-              </Link>
-              <Link href="#categories" className="text-sm font-medium text-gray-400 hover:text-dark transition-colors">
-                Category
-              </Link>
-              <Link href="#products" className="text-sm font-medium text-gray-400 hover:text-dark transition-colors">
-                Explore Products
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <Search size={18} className="text-dark" />
-              </button>
-              <button 
-                onClick={openCart}
-                className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <ShoppingBag size={18} className="text-dark" />
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-white text-[9px] font-bold rounded-full flex items-center justify-center">
-                    {getTotalItems()}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#F5F5F5] py-16 lg:py-20">
@@ -288,63 +243,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-16" style={{ backgroundColor: '#111111' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            {/* Logo & Description */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
-                    <path d="M256 32L128 96V224C128 320 256 416 256 416C256 416 384 320 384 224V96L256 32Z" fill="#111" />
-                    <path d="M256 64L160 112V208C160 272 256 352 256 352C256 352 352 272 352 208V112L256 64Z" fill="#FF5F3F" />
-                  </svg>
-                </div>
-                <span className="text-base font-bold text-white tracking-tight">SPORT<span style={{ color: '#FF5F3F' }}>ON</span></span>
-              </div>
-              <p className="text-gray-500 text-xs leading-relaxed max-w-[200px]">
-                Engineered for endurance and designed for speed.
-                Experience gear that moves as fast as you do.
-              </p>
-            </div>
-
-            {/* Navigation Links */}
-            <div className="space-y-4">
-              <ul className="space-y-3">
-                <li><Link href="/" className="text-gray-400 text-sm hover:text-white transition-colors">Home</Link></li>
-                <li><Link href="#categories" className="text-gray-400 text-sm hover:text-white transition-colors">Categories</Link></li>
-                <li><Link href="#products" className="text-gray-400 text-sm hover:text-white transition-colors">Explore Products</Link></li>
-                <li><Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors">About Us</Link></li>
-              </ul>
-            </div>
-
-            {/* Social */}
-            <div className="space-y-4">
-              <ul className="space-y-3">
-                <li><Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors">Instagram</Link></li>
-                <li><Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors">Facebook</Link></li>
-                <li><Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors">TikTok</Link></li>
-                <li><Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors">YouTube</Link></li>
-              </ul>
-            </div>
-
-            {/* Empty for spacing */}
-            <div></div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-600 text-xs">
-              SportOn © 2025 All Rights Reserved.
-            </p>
-            <div className="flex items-center gap-8">
-              <Link href="#" className="text-gray-500 text-xs hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="text-xs hover:text-white transition-colors" style={{ color: '#FF5F3F' }}>Terms Conditions</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

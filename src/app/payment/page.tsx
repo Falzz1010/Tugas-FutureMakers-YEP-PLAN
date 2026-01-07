@@ -112,15 +112,7 @@ export default function PaymentPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-dark rounded-lg flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
-                  <path d="M256 32L128 96V224C128 320 256 416 256 416C256 416 384 320 384 224V96L256 32Z" fill="white" />
-                  <path d="M256 64L160 112V208C160 272 256 352 256 352C256 352 352 272 352 208V112L256 64Z" fill="#FF5F3F" />
-                </svg>
-              </div>
-              <span className="text-base font-bold text-dark tracking-tight">
-                SPORT<span style={{ color: '#FF5F3F' }}>ON</span>
-              </span>
+              <img src="/Frame 5.png" alt="SportOn Logo" className="h-8" />
             </Link>
 
             <div className="hidden md:flex items-center gap-12">
@@ -282,20 +274,14 @@ export default function PaymentPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16" style={{ backgroundColor: '#111111' }}>
+      <footer className="py-16 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             {/* Logo & Description */}
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
-                    <path d="M256 32L128 96V224C128 320 256 416 256 416C256 416 384 320 384 224V96L256 32Z" fill="#111" />
-                    <path d="M256 64L160 112V208C160 272 256 352 256 352C256 352 352 272 352 208V112L256 64Z" fill="#FF5F3F" />
-                  </svg>
-                </div>
-                <span className="text-base font-bold text-white tracking-tight">SPORT<span style={{ color: '#FF5F3F' }}>ON</span></span>
-              </div>
+              <Link href="/" className="inline-block">
+                <img src="/Frame 4.png" alt="SportOn Logo" className="h-8" />
+              </Link>
               <p className="text-gray-500 text-xs leading-relaxed max-w-[200px]">
                 Engineered for endurance and designed for speed.
                 Experience gear that moves as fast as you do.
