@@ -40,8 +40,9 @@ export default function LandingPage() {
       <CartPopup />
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#F5F5F5] py-16 lg:py-20">
+      <main>
+        {/* Hero Section */}
+        <section className="relative overflow-hidden bg-[#F5F5F5] py-16 lg:py-20">
         {/* Basketball image watermark on left */}
         <div className="absolute left-8 top-1/2 -translate-y-1/2 w-[350px] h-[350px] opacity-[0.08]">
           <img
@@ -142,7 +143,7 @@ export default function LandingPage() {
             {/* Running */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-running.png" alt="Running" className="w-full h-full object-contain" />
+                <img src="/icon/category-running.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Running</span>
             </button>
@@ -150,7 +151,7 @@ export default function LandingPage() {
             {/* Tennis */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-Tennis.png" alt="Tennis" className="w-full h-full object-contain" />
+                <img src="/icon/category-Tennis.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Tennis</span>
             </button>
@@ -158,7 +159,7 @@ export default function LandingPage() {
             {/* Basketball */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-basketball.png" alt="Basketball" className="w-full h-full object-contain" />
+                <img src="/icon/category-basketball.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Basketball</span>
             </button>
@@ -166,7 +167,7 @@ export default function LandingPage() {
             {/* Football */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-football.png" alt="Football" className="w-full h-full object-contain" />
+                <img src="/icon/category-football.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Football</span>
             </button>
@@ -174,7 +175,7 @@ export default function LandingPage() {
             {/* Badminton */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-badminton.png" alt="Badminton" className="w-full h-full object-contain" />
+                <img src="/icon/category-badminton.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Badminton</span>
             </button>
@@ -182,7 +183,7 @@ export default function LandingPage() {
             {/* Swimming */}
             <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
               <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-swimming.png" alt="Swimming" className="w-full h-full object-contain" />
+                <img src="/icon/category-swimming.png" alt="" className="w-full h-full object-contain" />
               </div>
               <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Swimming</span>
             </button>
@@ -220,6 +221,7 @@ export default function LandingPage() {
                     onClick={(e) => handleAddToCart(e, product)}
                     className="absolute top-3 right-3 w-7 h-7 text-white rounded-lg flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
                     style={{ backgroundColor: '#FF5F3F' }}
+                    aria-label={`Add ${product.name} to cart`}
                   >
                     <Plus size={16} strokeWidth={2.5} />
                   </button>
@@ -242,6 +244,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>

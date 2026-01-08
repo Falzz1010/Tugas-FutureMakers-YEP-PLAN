@@ -14,6 +14,9 @@ export default function TransactionsPage() {
     const [selectedTrx, setSelectedTrx] = useState<Transaction | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    console.log('📊 Transactions page - Total transactions:', transactions.length);
+    console.log('📊 Transactions data:', transactions);
+
     const handleOpenDetail = (trx: Transaction) => {
         setSelectedTrx(trx);
         setIsModalOpen(true);

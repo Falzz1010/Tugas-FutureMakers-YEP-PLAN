@@ -68,8 +68,15 @@ const useZustandStore = create<StoreState & StoreActions>()(
                 const newTransaction: Transaction = 'id' in transaction && transaction.id
                     ? transaction as Transaction
                     : { ...transaction, id: crypto.randomUUID() };
+                
+                console.log('🟢 Zustand: Adding transaction to store', newTransaction);
+                console.log('🟢 Current transactions count:', state.transactions.length);
+                
+                const updatedTransactions = [...state.transactions, newTransaction];
+                console.log('🟢 New transactions count:', updatedTransactions.length);
+                
                 return {
-                    transactions: [...state.transactions, newTransaction]
+                    transactions: updatedTransactions
                 };
             }),
             updateTransactionStatus: (id, status) => set((state) => ({

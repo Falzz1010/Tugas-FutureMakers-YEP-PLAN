@@ -64,7 +64,11 @@ export default function PaymentPage() {
     const transactionId = crypto.randomUUID();
     const transaction = {
       id: transactionId,
-      date: new Date().toISOString(),
+      date: new Date().toLocaleDateString('id-ID', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      }),
       customer: checkoutData.fullName || 'Customer',
       contact: checkoutData.phone || checkoutData.email || '-',
       address: checkoutData.address || '-',
@@ -78,7 +82,10 @@ export default function PaymentPage() {
       }))
     };
 
+    console.log('🔵 Adding transaction:', transaction);
     addTransaction(transaction);
+    console.log('✅ Transaction added, ID:', transactionId);
+    
     setCurrentOrderId(transactionId);
     clearCart();
     localStorage.removeItem('checkoutData');

@@ -28,12 +28,16 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <button 
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Search products"
+            >
               <Search size={18} className="text-dark" />
             </button>
             <button 
               onClick={openCart}
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label={`Shopping cart with ${getTotalItems()} items`}
             >
               <ShoppingBag size={18} className="text-dark" />
               {getTotalItems() > 0 && (
