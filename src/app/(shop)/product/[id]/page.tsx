@@ -9,6 +9,8 @@ import { Footer } from "@/components/Footer";
 import { useParams, useRouter } from "next/navigation";
 import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 
+export const dynamic = 'force-dynamic';
+
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();

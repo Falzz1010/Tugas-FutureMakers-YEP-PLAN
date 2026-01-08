@@ -7,6 +7,8 @@ import { CategoryModal } from "./_components/CategoryModal";
 import { Category } from "@/types";
 import { Plus, Search, Pencil, Trash2 } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 interface FilterFormValues {
     search: string;
 }

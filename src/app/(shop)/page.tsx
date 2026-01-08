@@ -8,6 +8,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 
+export const dynamic = 'force-dynamic';
+
 // Format currency
 const formatPrice = (price: number) => {
   return `Rp. ${price.toLocaleString("id-ID")}`;

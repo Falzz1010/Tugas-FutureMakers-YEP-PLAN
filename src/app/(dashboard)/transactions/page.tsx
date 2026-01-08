@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { Transaction } from "@/types";
 import { formatCurrency } from "@/lib/format";
 
+export const dynamic = 'force-dynamic';
+
 export default function TransactionsPage() {
     const { transactions, isLoading, updateTransactionStatus } = useSupabaseStore();
     const [selectedTrx, setSelectedTrx] = useState<Transaction | null>(null);

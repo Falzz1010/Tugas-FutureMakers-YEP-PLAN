@@ -9,6 +9,8 @@ import { useOrder } from "@/context/OrderContext";
 import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { TransactionStatus } from "@/types";
 
+export const dynamic = 'force-dynamic';
+
 interface StatusConfig {
   title: string;
   message: string;

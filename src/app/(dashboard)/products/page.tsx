@@ -9,6 +9,8 @@ import { ProductsHeader } from "./_components/ProductsHeader";
 import { ProductsFilter } from "./_components/ProductsFilter";
 import { ProductsTable } from "./_components/ProductsTable";
 
+export const dynamic = 'force-dynamic';
+
 interface FilterFormValues {
     search: string;
 }

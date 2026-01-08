@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Input } from "@/components/ui/shared";
 import { useForm } from "react-hook-form";
 
+export const dynamic = 'force-dynamic';
+
 interface BankFormData {
     bankName: string;
     accountNumber: string;

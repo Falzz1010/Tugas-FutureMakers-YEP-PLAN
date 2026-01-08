@@ -10,6 +10,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useRouter } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
+
 export default function PaymentPage() {
   const router = useRouter();
   const { cart, getTotalPrice, clearCart } = useCart();
