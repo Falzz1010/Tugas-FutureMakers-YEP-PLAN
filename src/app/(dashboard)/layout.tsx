@@ -1,6 +1,5 @@
 "use client";
 
-import { useStore } from "@/hooks/useStore";
 import { Sidebar } from "@/components/Sidebar";
 import { AdminProviders } from "@/components/AdminProviders";
 import { useState } from "react";

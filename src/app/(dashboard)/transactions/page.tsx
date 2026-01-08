@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { Modal } from "@/components/Modal";
 import { Button, Card } from "@/components/ui/shared";
 import { Eye, Check, X, FileText, BadgeCheck, Landmark } from "lucide-react";
@@ -10,7 +10,7 @@ import { Transaction } from "@/types";
 import { formatCurrency } from "@/lib/format";
 
 export default function TransactionsPage() {
-    const { transactions, isLoading, updateTransactionStatus } = useStore();
+    const { transactions, isLoading, updateTransactionStatus } = useSupabaseStore();
     const [selectedTrx, setSelectedTrx] = useState<Transaction | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -102,36 +102,36 @@ export default function TransactionsPage() {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 title="Verify Transactions"
-                maxWidth="max-w-5xl"
+                maxWidth="max-w-4xl"
             >
                 {selectedTrx && (
-                    <div className="space-y-12 py-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                            <div className="space-y-4">
-                                <h4 className="text-[14px] font-bold text-gray-900">Payment Proof</h4>
-                                <div className="bg-[#1D91E1] rounded-3xl p-6 aspect-[3/4] flex flex-col items-center relative overflow-hidden shadow-xl">
-                                    <div className="w-full flex justify-between items-center text-white mb-6">
-                                        <div className="p-2 bg-white/20 rounded-lg">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
+                    <div className="space-y-6 py-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                            <div className="space-y-3">
+                                <h4 className="text-[13px] font-bold text-gray-900">Payment Proof</h4>
+                                <div className="bg-[#1D91E1] rounded-2xl p-4 aspect-[3/4] flex flex-col items-center relative overflow-hidden shadow-lg max-w-[280px] mx-auto">
+                                    <div className="w-full flex justify-between items-center text-white mb-4">
+                                        <div className="p-1.5 bg-white/20 rounded-lg">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
                                         </div>
-                                        <div className="p-2">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+                                        <div className="p-1.5">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
                                         </div>
                                     </div>
 
-                                    <div className="bg-white text-gray-900 w-full flex-1 rounded-t-2xl relative">
-                                        <div className="absolute -top-3 left-0 right-0 h-3 bg-white" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
+                                    <div className="bg-white text-gray-900 w-full flex-1 rounded-t-xl relative">
+                                        <div className="absolute -top-2 left-0 right-0 h-2 bg-white" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
 
-                                        <div className="p-6 flex flex-col items-center text-center space-y-4 pt-8">
-                                            <div className="w-12 h-12 bg-[#1D91E1] rounded-full flex items-center justify-center text-white mb-2">
-                                                <BadgeCheck size={24} strokeWidth={3} />
+                                        <div className="p-4 flex flex-col items-center text-center space-y-3 pt-6">
+                                            <div className="w-10 h-10 bg-[#1D91E1] rounded-full flex items-center justify-center text-white mb-1">
+                                                <BadgeCheck size={20} strokeWidth={3} />
                                             </div>
-                                            <h5 className="font-bold text-lg">Transfer Successful</h5>
-                                            <p className="text-xs text-gray-400 font-medium">Feb 23, 2026 • 19:32:05 WIB<br />Ref: 202612838123</p>
+                                            <h5 className="font-bold text-base">Transfer Successful</h5>
+                                            <p className="text-[10px] text-gray-400 font-medium">Feb 23, 2026 • 19:32:05 WIB<br />Ref: 202612838123</p>
 
-                                            <div className="w-full border-t border-dashed border-gray-200 my-4" />
+                                            <div className="w-full border-t border-dashed border-gray-200 my-2" />
 
-                                            <div className="w-full space-y-3 text-xs">
+                                            <div className="w-full space-y-2 text-[10px]">
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-400">Source Bank</span>
                                                     <span className="font-bold">BANK BRI</span>
@@ -146,16 +146,16 @@ export default function TransactionsPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="w-full border-t border-dashed border-gray-200 my-4" />
+                                            <div className="w-full border-t border-dashed border-gray-200 my-2" />
 
                                             <div className="flex justify-between w-full items-center">
-                                                <span className="text-gray-400 text-xs text-left">Total Amount</span>
-                                                <span className="text-xl font-black text-[#1D91E1]">{formatCurrency(selectedTrx.total)}</span>
+                                                <span className="text-gray-400 text-[10px] text-left">Total Amount</span>
+                                                <span className="text-lg font-black text-[#1D91E1]">{formatCurrency(selectedTrx.total)}</span>
                                             </div>
                                         </div>
 
-                                        <div className="px-6 pb-6">
-                                            <div className="w-full bg-[#1D91E1] text-white text-xs font-bold py-3 rounded-xl flex items-center justify-center">
+                                        <div className="px-4 pb-4">
+                                            <div className="w-full bg-[#1D91E1] text-white text-[10px] font-bold py-2 rounded-lg flex items-center justify-center">
                                                 Done
                                             </div>
                                         </div>
@@ -163,24 +163,24 @@ export default function TransactionsPage() {
                                 </div>
                             </div>
 
-                            <div className="space-y-8">
+                            <div className="space-y-6">
                                 <div>
-                                    <h4 className="text-[14px] font-bold text-gray-900 mb-6">Order Details</h4>
+                                    <h4 className="text-[13px] font-bold text-gray-900 mb-4">Order Details</h4>
 
-                                    <div className="space-y-4 mb-8">
-                                        <div className="flex justify-between text-sm">
+                                    <div className="space-y-3 mb-6">
+                                        <div className="flex justify-between text-xs">
                                             <span className="text-gray-400 font-medium">Date</span>
                                             <span className="text-gray-900 font-bold">{selectedTrx.date}</span>
                                         </div>
-                                        <div className="flex justify-between text-sm">
+                                        <div className="flex justify-between text-xs">
                                             <span className="text-gray-400 font-medium">Customer</span>
                                             <span className="text-gray-900 font-bold">{selectedTrx.customer}</span>
                                         </div>
-                                        <div className="flex justify-between text-sm">
+                                        <div className="flex justify-between text-xs">
                                             <span className="text-gray-400 font-medium">Contact</span>
                                             <span className="text-gray-900 font-bold">{selectedTrx.contact}</span>
                                         </div>
-                                        <div className="flex justify-between text-sm">
+                                        <div className="flex justify-between text-xs">
                                             <span className="text-gray-400 font-medium">Shipping Address</span>
                                             <span className="text-gray-900 font-bold text-right max-w-[200px] leading-relaxed">
                                                 {selectedTrx.address}
@@ -188,40 +188,40 @@ export default function TransactionsPage() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-4">
-                                        <h5 className="text-[13px] font-bold text-gray-900">Items Purchased</h5>
+                                    <div className="space-y-3">
+                                        <h5 className="text-[12px] font-bold text-gray-900">Items Purchased</h5>
                                         {selectedTrx.items.map((item, idx) => (
-                                            <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-gray-200">
-                                                        <img src="/placeholder-shoe.png" alt="" className="w-8 h-8 opacity-50" />
+                                            <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
+                                                        <img src="/placeholder-shoe.png" alt="" className="w-6 h-6 opacity-50" />
                                                     </div>
-                                                    <span className="font-bold text-gray-900 text-sm">{item.name}</span>
+                                                    <span className="font-bold text-gray-900 text-xs">{item.name}</span>
                                                 </div>
-                                                <span className="text-sm font-bold text-gray-900">{item.quantity} units</span>
+                                                <span className="text-xs font-bold text-gray-900">{item.quantity} units</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <div className="flex justify-between items-center pt-8 mt-4">
-                                        <span className="font-bold text-gray-900">Total</span>
-                                        <span className="text-xl font-bold text-primary">{formatCurrency(selectedTrx.total)}</span>
+                                    <div className="flex justify-between items-center pt-6 mt-3">
+                                        <span className="font-bold text-gray-900 text-sm">Total</span>
+                                        <span className="text-lg font-bold text-primary">{formatCurrency(selectedTrx.total)}</span>
                                     </div>
                                 </div>
 
-                                <div className="flex gap-4 pt-4">
+                                <div className="flex gap-3 pt-3">
                                     <Button
                                         onClick={() => handleAction('REJECTED')}
-                                        className="flex-1 h-12 bg-white border border-rose-200 text-rose-500 hover:bg-rose-50 rounded-xl font-bold"
+                                        className="flex-1 h-11 bg-white border border-rose-200 text-rose-500 hover:bg-rose-50 rounded-xl font-bold text-xs"
                                     >
-                                        <X size={18} className="mr-2" />
+                                        <X size={16} className="mr-2" />
                                         Reject
                                     </Button>
                                     <Button
                                         onClick={() => handleAction('PAID')}
-                                        className="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-200"
+                                        className="flex-1 h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-200 text-xs"
                                     >
-                                        <Check size={18} className="mr-2" />
+                                        <Check size={16} className="mr-2" />
                                         Approve
                                     </Button>
                                 </div>

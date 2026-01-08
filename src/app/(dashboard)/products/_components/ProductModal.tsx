@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/components/Modal";
 import { Button, Input } from "@/components/ui/shared";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { ImagePlus, ChevronDown } from "lucide-react";
 import { Product } from "@/types";
 
@@ -23,7 +23,7 @@ interface ProductFormValues {
 }
 
 export function ProductModal({ isOpen, onClose, initialData }: ProductModalProps) {
-    const { addProduct, updateProduct, categories } = useStore();
+    const { addProduct, updateProduct, categories } = useSupabaseStore();
     const [preview, setPreview] = useState<string | null>(null);
     const fileRef = useRef<HTMLInputElement>(null);
 

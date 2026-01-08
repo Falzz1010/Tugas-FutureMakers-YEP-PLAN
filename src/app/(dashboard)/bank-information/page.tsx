@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { Card, Button } from "@/components/ui/shared";
 import { Plus, Trash2, Pencil, CreditCard } from "lucide-react";
 import { Modal } from "@/components/Modal";
@@ -15,7 +15,7 @@ interface BankFormData {
 }
 
 export default function BankInformationPage() {
-    const { bankAccounts, isLoading, deleteBank, addBank } = useStore();
+    const { bankAccounts, isLoading, deleteBank, addBank } = useSupabaseStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<BankFormData>({

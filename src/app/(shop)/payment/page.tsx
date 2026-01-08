@@ -4,7 +4,7 @@ import { CreditCard, Upload, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useOrder } from "@/context/OrderContext";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { CartPopup } from "@/components/CartPopup";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -14,7 +14,7 @@ export default function PaymentPage() {
   const router = useRouter();
   const { cart, getTotalPrice, clearCart } = useCart();
   const { setCurrentOrderId } = useOrder();
-  const { bankAccounts, isLoading, addTransaction } = useStore();
+  const { bankAccounts, isLoading, addTransaction } = useSupabaseStore();
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [checkoutData, setCheckoutData] = useState<any>(null);

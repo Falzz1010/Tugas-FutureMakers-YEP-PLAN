@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/components/Modal";
 import { Button, Input } from "@/components/ui/shared";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { ImagePlus } from "lucide-react";
 import { Category } from "@/types";
 
@@ -20,7 +20,7 @@ interface CategoryFormValues {
 }
 
 export function CategoryModal({ isOpen, onClose, initialData }: CategoryModalProps) {
-    const { addCategory, updateCategory } = useStore();
+    const { addCategory, updateCategory } = useSupabaseStore();
     const [preview, setPreview] = useState<string | null>(null);
     const fileRef = useRef<HTMLInputElement>(null);
 

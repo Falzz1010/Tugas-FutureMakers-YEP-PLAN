@@ -1,16 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, FolderPen } from "lucide-react";
-import { useStore } from "@/hooks/useStore";
-import { Button, Card } from "@/components/ui/shared";
+import { useForm } from "react-hook-form";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { CategoryModal } from "./_components/CategoryModal";
 import { Category } from "@/types";
+import { Plus, Search, Pencil, Trash2 } from "lucide-react";
+
+interface FilterFormValues {
+    search: string;
+}
 
 export default function CategoriesPage() {
-    const { categories, isLoading, deleteCategory } = useStore();
+    const { categories, isLoading, deleteCategory } = useSupabaseStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+
+    const { register, watch } = useForm<FilterFormValues>({
+        defaultValues: {
+            search: ""
+        }
+    });
+
+    const searchQuery = watch("search");
+
+    const filteredCategories = categories.filter(c =>
+        c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const handleOpenAdd = () => {
         setEditingCategory(null);
@@ -22,75 +39,92 @@ export default function CategoriesPage() {
         setIsModalOpen(true);
     };
 
-    if (isLoading) return <div className="p-8 animate-pulse text-gray-400 font-bold uppercase tracking-widest text-xs">Loading taxonomy...</div>;
+    if (isLoading) return <div className="p-8 animate-pulse text-gray-400 font-bold">Loading categories...</div>;
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 pb-12">
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-black text-gray-900 tracking-tight">Category Management</h1>
-                    <p className="text-gray-500 font-medium">Organize your products into categories.</p>
+        <div className="max-w-[1400px] mx-auto space-y-8 pb-12">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-black text-gray-900">Categories</h1>
+                    <p className="text-sm text-gray-500 mt-1">Manage product categories</p>
                 </div>
-                <Button onClick={handleOpenAdd} className="h-12 px-6 bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/20 rounded-xl">
-                    <Plus size={18} strokeWidth={3} className="mr-2" />
-                    <span>Add Category</span>
-                </Button>
-            </header>
+                <button
+                    onClick={handleOpenAdd}
+                    className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 transition-all"
+                >
+                    <Plus size={18} />
+                    Add Category
+                </button>
+            </div>
 
-            <Card className="border border-gray-100 shadow-xl shadow-gray-200/20">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead className="bg-[#FAFBFD] border-b border-gray-100">
-                            <tr>
-                                <th className="px-10 py-6 text-[13px] font-bold text-gray-900">Category</th>
-                                <th className="px-10 py-6 text-[13px] font-bold text-gray-900">Description</th>
-                                <th className="px-10 py-6 text-[13px] font-bold text-gray-900 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-50">
-                            {categories.length === 0 ? (
-                                <tr>
-                                    <td colSpan={3} className="px-10 py-24 text-center text-gray-300 font-bold italic">No categories defined yet.</td>
-                                </tr>
-                            ) : categories.map((c) => (
-                                <tr key={c.id} className="group hover:bg-[#FDFEFF] transition-all">
-                                    <td className="px-10 py-8">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-12 h-12 rounded-lg bg-gray-100/50 border border-gray-100 flex items-center justify-center overflow-hidden">
-                                                {c.image ? (
-                                                    <img src={c.image} className="w-full h-full object-cover" alt="" />
-                                                ) : (
-                                                    <FolderPen className="text-gray-300" size={24} />
-                                                )}
-                                            </div>
-                                            <span className="text-gray-900 font-bold text-sm">{c.name}</span>
-                                        </div>
-                                    </td>
-                                    <td className="px-10 py-8">
-                                        <p className="text-gray-900 font-medium text-sm">{c.description}</p>
-                                    </td>
-                                    <td className="px-10 py-8 text-right">
-                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                                            <button
-                                                onClick={() => handleOpenEdit(c)}
-                                                className="p-3.5 bg-white border border-gray-100 rounded-2xl text-gray-400 hover:text-gray-900 hover:shadow-lg transition-all"
-                                            >
-                                                <Pencil size={20} />
-                                            </button>
-                                            <button
-                                                onClick={() => deleteCategory(c.id)}
-                                                className="p-3.5 bg-rose-50 text-rose-300 hover:text-rose-600 rounded-2xl transition-all"
-                                            >
-                                                <Trash2 size={20} />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+            {/* Search */}
+            <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <input
+                    type="text"
+                    placeholder="Search categories..."
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-100 bg-gray-50/50 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                    {...register("search")}
+                />
+            </div>
+
+            {/* Categories Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCategories.map((category) => (
+                    <div
+                        key={category.id}
+                        className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-all group"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className="w-20 h-20 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0">
+                                {category.image ? (
+                                    <img
+                                        src={category.image}
+                                        alt={category.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-300">
+                                        <span className="text-2xl font-bold">{category.name[0]}</span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="font-bold text-gray-900 text-lg truncate">{category.name}</h3>
+                                <p className="text-sm text-gray-500 mt-1 line-clamp-2">{category.description}</p>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-4 pt-4 border-t border-gray-50">
+                            <button
+                                onClick={() => handleOpenEdit(category)}
+                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg font-bold text-sm transition-all"
+                            >
+                                <Pencil size={16} />
+                                Edit
+                            </button>
+                            <button
+                                onClick={() => {
+                                    if (confirm(`Delete category "${category.name}"?`)) {
+                                        deleteCategory(category.id);
+                                    }
+                                }}
+                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg font-bold text-sm transition-all"
+                            >
+                                <Trash2 size={16} />
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {filteredCategories.length === 0 && (
+                <div className="text-center py-12">
+                    <p className="text-gray-400 font-medium">No categories found</p>
                 </div>
-            </Card>
+            )}
 
             <CategoryModal
                 isOpen={isModalOpen}

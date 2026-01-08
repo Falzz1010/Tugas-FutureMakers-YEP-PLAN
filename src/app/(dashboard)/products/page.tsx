@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { ProductModal } from "./_components/ProductModal";
 import { Product } from "@/types";
 import { ProductsHeader } from "./_components/ProductsHeader";
@@ -14,7 +14,7 @@ interface FilterFormValues {
 }
 
 export default function ProductsPage() {
-    const { products, isLoading, deleteProduct, categories } = useStore();
+    const { products, isLoading, deleteProduct, categories } = useSupabaseStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 

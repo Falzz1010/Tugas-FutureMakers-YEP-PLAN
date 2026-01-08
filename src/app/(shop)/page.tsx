@@ -6,18 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { CartPopup } from "@/components/CartPopup";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-
-// Product data - matched to actual product images
-const products = [
-  { id: 1, name: "SportsOn Hyperfast Shoes", category: "Running", price: 339000, image: "/product-3.png" },
-  { id: 2, name: "SportsOn Rockets Tennis", category: "Tennis", price: 918000, image: "/product-2.png" },
-  { id: 3, name: "SportsOn Slowlvin", category: "Running", price: 99000, image: "/product-1.png" },
-  { id: 4, name: "SportsOn Hypersoccer V2", category: "Football", price: 458000, image: "/product-4.png" },
-  { id: 5, name: "SportsOn Hypersoccer v3", category: "Football", price: 486000, image: "/product-4.png" },
-  { id: 6, name: "SportsOn Slowlivin", category: "Running", price: 118000, image: "/product-5.png" },
-  { id: 7, name: "SportsOn Hyperfast Shoes", category: "Running", price: 229000, image: "/product-3.png" },
-  { id: 8, name: "SportsOn Rockets Tennis", category: "Tennis", price: 999000, image: "/product-2.png" },
-];
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 
 // Format currency
 const formatPrice = (price: number) => {
@@ -26,11 +15,20 @@ const formatPrice = (price: number) => {
 
 export default function LandingPage() {
   const { addToCart } = useCart();
+  const { categories, products: supabaseProducts, isLoading } = useSupabaseStore();
 
-  const handleAddToCart = (e: React.MouseEvent, product: typeof products[0]) => {
+  const getCategoryName = (categoryId: string) => {
+    return categories.find(c => c.id === categoryId)?.name || "Uncategorized";
+  };
+
+  const handleAddToCart = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
     addToCart({
-      ...product,
+      id: product.id,
+      name: product.name,
+      category: getCategoryName(product.categoryId),
+      price: product.price,
+      image: product.image || '/product-1.png',
       quantity: 1,
     });
   };
@@ -139,55 +137,29 @@ export default function LandingPage() {
           </div>
 
           {/* Category Cards */}
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-            {/* Running */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-running.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Running</span>
-            </button>
-
-            {/* Tennis */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-Tennis.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Tennis</span>
-            </button>
-
-            {/* Basketball */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-basketball.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Basketball</span>
-            </button>
-
-            {/* Football */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-football.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Football</span>
-            </button>
-
-            {/* Badminton */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-badminton.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Badminton</span>
-            </button>
-
-            {/* Swimming */}
-            <button className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all">
-              <div className="w-14 h-14 flex items-center justify-center">
-                <img src="/icon/category-swimming.png" alt="" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>Swimming</span>
-            </button>
-          </div>
+          {isLoading ? (
+            <div className="text-center py-8 text-gray-400">Loading categories...</div>
+          ) : (
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+              {categories.map((category) => (
+                <button 
+                  key={category.id}
+                  className="flex flex-col items-center gap-2 p-5 bg-[#F5F5F5] rounded-xl hover:shadow-sm transition-all"
+                >
+                  <div className="w-14 h-14 flex items-center justify-center">
+                    {category.image ? (
+                      <img src={category.image} alt={category.name} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-bold">
+                        {category.name[0]}
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-xs font-semibold" style={{ color: '#FF5F3F' }}>{category.name}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -201,47 +173,53 @@ export default function LandingPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <Link
-                key={product.id}
-                href={`/product/${product.id}`}
-                className="group"
-              >
-                {/* Product Image */}
-                <div className="relative aspect-square bg-gray-50 rounded-2xl p-4 overflow-hidden mb-3">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
+          {isLoading ? (
+            <div className="text-center py-8 text-gray-400">Loading products...</div>
+          ) : supabaseProducts.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">No products available</div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {supabaseProducts.map((product) => (
+                <Link
+                  key={product.id}
+                  href={`/product/${product.id}`}
+                  className="group"
+                >
+                  {/* Product Image */}
+                  <div className="relative aspect-square bg-gray-50 rounded-2xl p-4 overflow-hidden mb-3">
+                    <img
+                      src={product.image || '/product-1.png'}
+                      alt={product.name}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
 
-                  {/* Add to cart button - top right */}
-                  <button
-                    onClick={(e) => handleAddToCart(e, product)}
-                    className="absolute top-3 right-3 w-7 h-7 text-white rounded-lg flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
-                    style={{ backgroundColor: '#FF5F3F' }}
-                    aria-label={`Add ${product.name} to cart`}
-                  >
-                    <Plus size={16} strokeWidth={2.5} />
-                  </button>
-                </div>
+                    {/* Add to cart button - top right */}
+                    <button
+                      onClick={(e) => handleAddToCart(e, product)}
+                      className="absolute top-3 right-3 w-7 h-7 text-white rounded-lg flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
+                      style={{ backgroundColor: '#FF5F3F' }}
+                      aria-label={`Add ${product.name} to cart`}
+                    >
+                      <Plus size={16} strokeWidth={2.5} />
+                    </button>
+                  </div>
 
-                {/* Product Info */}
-                <div className="space-y-0.5">
-                  <h3 className="font-semibold text-dark text-sm line-clamp-1">
-                    {product.name}
-                  </h3>
-                  <p className="text-[11px] text-gray-400">
-                    {product.category}
-                  </p>
-                  <p className="font-bold text-sm" style={{ color: '#FF5F3F' }}>
-                    {formatPrice(product.price)}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+                  {/* Product Info */}
+                  <div className="space-y-0.5">
+                    <h3 className="font-semibold text-dark text-sm line-clamp-1">
+                      {product.name}
+                    </h3>
+                    <p className="text-[11px] text-gray-400">
+                      {getCategoryName(product.categoryId)}
+                    </p>
+                    <p className="font-bold text-sm" style={{ color: '#FF5F3F' }}>
+                      {formatPrice(product.price)}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       </main>

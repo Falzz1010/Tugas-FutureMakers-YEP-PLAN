@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useOrder } from "@/context/OrderContext";
-import { useStore } from "@/hooks/useStore";
+import { useSupabaseStore } from "@/hooks/useSupabaseStore";
 import { TransactionStatus } from "@/types";
 
 interface StatusConfig {
@@ -44,7 +44,7 @@ const statusConfig: Record<TransactionStatus, StatusConfig> = {
 export default function OrderStatusPage() {
   const router = useRouter();
   const { currentOrderId } = useOrder();
-  const { transactions } = useStore();
+  const { transactions } = useSupabaseStore();
   const [status, setStatus] = useState<TransactionStatus>("PENDING");
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
